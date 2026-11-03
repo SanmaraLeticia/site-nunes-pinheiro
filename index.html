@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<!--
+  ==================================================================
+  SITE DO ESCRITÓRIO NUNES & PINHEIRO ADVOGADOS — index.html
+  ==================================================================
+
+  O QUE É ESTE ARQUIVO?
+  É o HTML: o "esqueleto" do site. Ele diz O QUE existe na página
+  (títulos, textos, fotos, botões) e em que ordem.
+  O visual (cores, tamanhos) fica no css/style.css.
+  O comportamento (menu abrir, números contando) fica no js/script.js.
+
+  COMO LER UMA TAG
+      <p class="hero-texto">Olá</p>
+       │   │                │    └── fecha a tag (com a barra /)
+       │   │                └─────── conteúdo que aparece na tela
+       │   └──────────────────────── atributo: informação extra
+       └──────────────────────────── nome da tag (p = parágrafo)
+
+  O atributo class="..." liga o elemento às regras do CSS e do
+  Bootstrap. Um elemento pode ter várias classes separadas por
+  espaço: class="btn btn-dourado btn-lg".
+
+  ESTE TEXTO VERDE (entre <!- - e - ->) É UM COMENTÁRIO
+  O navegador ignora. Serve só para quem lê o código.
+
+  PROCURE POR [RESPONSIVO]
+  Tudo o que faz o site se adaptar ao celular, tablet e computador
+  está marcado com [RESPONSIVO]. Use Ctrl+F para encontrar.
+
+  ------------------------------------------------------------------
+  COLA RÁPIDA — CLASSES DO BOOTSTRAP USADAS AQUI       [RESPONSIVO]
+  ------------------------------------------------------------------
+  O Bootstrap divide a largura em 12 COLUNAS. Você diz quantas das
+  12 cada bloco ocupa. E pode dizer um número diferente para cada
+  tamanho de tela, usando um "prefixo" de tamanho:
+
+    sem prefixo → vale para todas as telas (a partir de 0px)
+    sm  → a partir de 576px  (celular grande deitado)
+    md  → a partir de 768px  (tablet em pé)
+    lg  → a partir de 992px  (tablet deitado / notebook)
+    xl  → a partir de 1200px (computador)
+
+  Exemplos:
+    container        caixa centralizada, com margem dos lados
+    row              uma "linha" que guarda colunas
+    col-6            ocupa 6 de 12 (metade) em TODAS as telas
+    col-md-6         ocupa toda a largura até 767px; metade a partir de 768px
+    col-lg-4         ocupa toda a largura até 991px; 1/3 a partir de 992px
+    col-6 col-lg-3   metade no celular; 1/4 a partir de 992px
+    offset-lg-1      a partir de 992px, pula 1 coluna (espaço vazio antes)
+    g-4 / gy-5       espaço entre as colunas (g = todos, gy = só vertical)
+    d-flex           coloca os filhos lado a lado (flexbox)
+    flex-wrap        se não couberem, os filhos quebram para a linha de baixo
+    gap-3            espaço entre os filhos
+    mt-4 / mb-0      margem em cima (mt) / embaixo (mb); 0 a 5
+    text-lg-end      texto alinhado à direita só a partir de 992px
+  ==================================================================
+-->
+<html lang="pt-BR">
+<head>
+  <!-- ==============================================================
+       <head>: informações SOBRE a página. Nada daqui aparece no
+       corpo do site; são instruções para o navegador.
+       ============================================================== -->
+
+  <!-- Codificação: permite acentos e ç -->
+  <meta charset="UTF-8">
+
+  <!-- [RESPONSIVO] META VIEWPORT — A LINHA MAIS IMPORTANTE PARA O CELULAR
+       Sem ela, o celular finge ter uma tela de computador (~980px) e
+       mostra o site inteiro encolhido, com letras minúsculas.
+       width=device-width → a largura da página = a largura real da tela
+       initial-scale=1      → começa sem zoom
+       Repare que NÃO bloqueamos o zoom: quem enxerga pouco pode ampliar. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Nome que aparece na aba do navegador e no Google -->
+  <title>Nunes &amp; Pinheiro Advogados</title>
+  <meta name="description" content="Escritório de advocacia Full Service em Porto Velho/RO. Atendimento presencial e on-line em todo o Brasil, com atuação em diferentes áreas do Direito.">
+
+  <!-- Cor da barra do navegador no celular (Chrome no Android) -->
+  <meta name="theme-color" content="#15171b">
+
+  <!-- Ícones do site
+       favicon-32.png       → ícone pequeno da aba do navegador
+       apple-touch-icon.png → ícone que aparece quando alguém salva o
+                              site na tela inicial do celular -->
+  <link rel="icon" href="img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+
+  <!-- Fontes do Google
+       Cormorant Garamond → títulos (serifada, elegante)
+       Manrope            → textos (sem serifa, fácil de ler) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 (CSS), carregado da internet (CDN jsDelivr).
+       "integrity" confere se o arquivo que chegou é o original. -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+
+  <!-- Bootstrap Icons: ícones usados assim: <i class="bi bi-whatsapp"></i> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+  <!-- Nosso CSS. Vem DEPOIS do Bootstrap: quando duas regras
+       disputam, vale a que vem por último. Assim conseguimos
+       mudar o que for preciso no visual do Bootstrap. -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Avisa ao CSS que o JavaScript está funcionando (coloca a classe
+       "js" na página). Só então as animações escondem os elementos
+       antes de mostrá-los. -->
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+
+<!-- ================================================================
+     <body>: tudo o que aparece na tela.
+     data-bs-spy="scroll" liga o ScrollSpy do Bootstrap: ele acende
+     no menu o link da seção que está na tela no momento.
+     ================================================================ -->
+<body data-bs-spy="scroll" data-bs-target="#menu-principal" data-bs-root-margin="0px 0px -55%" tabindex="0">
+
+  <!-- Acessibilidade: link escondido que aparece quando alguém navega
+       pelo teclado (tecla TAB). Leva direto ao conteúdo. -->
+  <a class="visually-hidden-focusable pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+
+  <!-- ================================================================
+       1. CABEÇALHO / MENU
+       ----------------------------------------------------------------
+       Usa o componente "Navbar" do Bootstrap.
+       fixed-top → fica preso no topo enquanto a página rola.
+
+       [RESPONSIVO] navbar-expand-lg
+       Em telas a partir de 992px (lg), os links aparecem lado a lado.
+       Abaixo de 992px, eles se escondem e aparece o botão ☰
+       ("hambúrguer"). Ao tocar nele, o menu abre embaixo.
+       Uma única classe faz essa troca toda.
+       ================================================================ -->
+  <header>
+    <nav id="menu-principal" class="navbar navbar-expand-lg navbar-dark fixed-top cabecalho" aria-label="Menu principal">
+      <div class="container">
+
+        <!-- Logo (clicar nela volta ao topo).
+             width e height são o tamanho real do arquivo; o CSS define
+             o tamanho na tela. Informar os dois evita que a página
+             "pule" enquanto a imagem carrega. -->
+        <a class="navbar-brand" href="#inicio">
+          <img src="img/logo.svg" alt="Nunes &amp; Pinheiro Advogados" class="cabecalho-logo" width="848" height="275">
+        </a>
+
+        <!-- [RESPONSIVO] Botão ☰. Só aparece abaixo de 992px.
+             data-bs-toggle="collapse" + data-bs-target="#menu-links":
+             ao clicar, o Bootstrap abre/fecha o elemento com id="menu-links".
+             aria-label: o que um leitor de tela fala para pessoas cegas. -->
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#menu-links"
+                aria-controls="menu-links" aria-expanded="false" aria-label="Abrir menu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Os links do menu. href="#escritorio" leva até o elemento
+             que tem id="escritorio" na página.
+             ms-auto → empurra o menu para a direita.
+             align-items-lg-center → alinha pelo meio a partir de 992px. -->
+        <div class="collapse navbar-collapse" id="menu-links">
+          <ul class="navbar-nav ms-auto align-items-lg-center">
+            <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+            <li class="nav-item"><a class="nav-link" href="#escritorio">O escritório</a></li>
+            <li class="nav-item"><a class="nav-link" href="#areas">Áreas de atuação</a></li>
+            <li class="nav-item"><a class="nav-link" href="#advogadas">As advogadas</a></li>
+            <li class="nav-item"><a class="nav-link" href="#duvidas">Dúvidas</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contato">Contato</a></li>
+            <!-- [RESPONSIVO] mt-3 mt-lg-0: no celular, espaço em cima do
+                 botão; a partir de 992px, sem espaço.
+                 ms-lg-3: a partir de 992px, espaço à esquerda. -->
+            <li class="nav-item ms-lg-3 mt-3 mt-lg-0">
+              <!-- data-whatsapp: o JavaScript transforma este link num link do WhatsApp -->
+              <a class="btn btn-dourado btn-sm" href="#contato" data-whatsapp>
+                <i class="bi bi-whatsapp" aria-hidden="true"></i> Fale conosco
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+  </header>
+
+
+  <!-- <main>: o conteúdo principal da página -->
+  <main id="conteudo">
+
+    <!-- ==============================================================
+         2. TOPO (HERO) — a primeira coisa que o visitante vê
+         --------------------------------------------------------------
+         A imagem de fundo está no CSS (seção 5.2), não aqui.
+         ============================================================== -->
+    <section id="inicio" class="hero">
+      <div class="container">
+
+        <!-- [RESPONSIVO] GRID: row + col
+             gy-5 → espaço vertical entre as colunas quando elas
+             ficam uma embaixo da outra (no celular). -->
+        <div class="row align-items-center gy-5">
+
+          <!-- [RESPONSIVO] col-lg-7
+               Celular e tablet: ocupa a largura toda (12 de 12).
+               A partir de 992px: ocupa 7 de 12 colunas (lado esquerdo). -->
+          <div class="col-lg-7">
+            <p class="sobretitulo entrada">Escritório de Advocacia · Porto Velho/RO</p>
+
+            <!-- h1: o título mais importante da página (só existe um).
+                 <em> = ênfase; o CSS deixa em itálico dourado. -->
+            <h1 class="hero-titulo entrada">
+              Compromisso com o <em>Direito.</em> Respeito pela sua história.
+            </h1>
+
+            <p class="hero-texto entrada">
+              Serviços jurídicos em diferentes áreas do Direito, com atendimento próximo,
+              comunicação clara e acompanhamento responsável em cada demanda.
+            </p>
+
+            <!-- [RESPONSIVO] d-flex flex-wrap gap-3
+                 Os dois botões ficam lado a lado; se não couberem,
+                 o de baixo desce para a linha seguinte. -->
+            <div class="d-flex flex-wrap gap-3 entrada">
+              <a class="btn btn-dourado btn-lg" href="#contato" data-whatsapp>
+                <i class="bi bi-whatsapp" aria-hidden="true"></i> Fale com as advogadas
+              </a>
+              <a class="btn btn-contorno btn-lg" href="#escritorio">Conheça o escritório</a>
+            </div>
+
+            <!-- Selos (ul = lista; li = item da lista).
+                 aria-hidden="true" nos ícones: o leitor de tela pula,
+                 porque são só decoração. -->
+            <ul class="hero-selos entrada">
+              <li><i class="bi bi-briefcase" aria-hidden="true"></i> Atendimento 24h por dia</li>
+              <li><i class="bi bi-geo-alt" aria-hidden="true"></i> Presencial e on-line</li>
+            </ul>
+          </div>
+
+          <!-- [RESPONSIVO] col-lg-5
+               Celular e tablet: a foto aparece EMBAIXO do texto.
+               A partir de 992px: fica AO LADO do texto (5 de 12 colunas). -->
+          <div class="col-lg-5">
+            <figure class="moldura entrada">
+              <!-- [RESPONSIVO] IMAGEM RESPONSIVA (srcset + sizes)
+                   Existem duas versões da mesma foto:
+                     foto-topo-600.jpg  → 600px de largura  (65 KB)
+                     foto-topo-1000.jpg → 1000px de largura (135 KB)
+                   srcset: lista as versões e a largura de cada uma (600w = 600px).
+                   sizes: diz ao navegador o tamanho que a foto terá na tela:
+                     a partir de 992px → cerca de 500px
+                     a partir de 576px → no máximo 416px
+                     abaixo disso      → a largura da tela (100vw)
+                   Com isso o NAVEGADOR escolhe sozinho a versão certa,
+                   considerando também a nitidez da tela do aparelho.
+                   src: versão usada por navegadores antigos. -->
+              <img src="img/foto-topo-1000.jpg"
+                   srcset="img/foto-topo-600.jpg 600w, img/foto-topo-1000.jpg 1000w"
+                   sizes="(min-width: 992px) 500px, (min-width: 576px) 416px, 100vw"
+                   alt="As advogadas do escritório Nunes &amp; Pinheiro"
+                   width="1000" height="1096">
+            </figure>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         3. O ESCRITÓRIO — foto + texto institucional
+         ============================================================== -->
+    <section id="escritorio" class="secao">
+      <div class="container">
+
+        <!-- gx-lg-5: a partir de 992px, mais espaço entre a foto e o texto -->
+        <div class="row align-items-center gy-5 gx-lg-5">
+
+          <!-- [RESPONSIVO] Foto: largura toda no celular; 5 de 12 no computador -->
+          <div class="col-lg-5">
+            <!-- moldura--paisagem: esta foto é deitada, então a caixa
+                 dela tem formato paisagem (ver CSS, seção 4.3).
+                 loading="lazy": a foto só é baixada quando a pessoa
+                 rola até perto dela. Economiza internet no celular. -->
+            <figure class="moldura moldura--paisagem revelar">
+              <img src="img/foto-escritorio-1200.jpg"
+                   srcset="img/foto-escritorio-600.jpg 600w, img/foto-escritorio-1200.jpg 1200w"
+                   sizes="(min-width: 992px) 500px, (min-width: 576px) 416px, 100vw"
+                   alt="As advogadas em atendimento no escritório"
+                   width="1200" height="800" loading="lazy">
+            </figure>
+          </div>
+
+          <!-- [RESPONSIVO] col-lg-6 offset-lg-1
+               A partir de 992px: ocupa 6 colunas e pula 1 antes
+               (5 + 1 + 6 = 12). No celular: largura toda, embaixo da foto. -->
+          <div class="col-lg-6 offset-lg-1">
+            <div class="revelar">
+              <p class="sobretitulo">O escritório</p>
+              <h2 class="titulo-grande">Nunes &amp; Pinheiro Advogados</h2>
+
+              <p class="texto-destaque">
+                O Nunes &amp; Pinheiro Advogados é um escritório dedicado à prestação de serviços
+                jurídicos, com atuação em diferentes áreas do Direito.
+              </p>
+              <p>
+                Nossa atuação é fundamentada na ética profissional, no conhecimento jurídico e no
+                compromisso de compreender as particularidades de cada situação.
+              </p>
+              <p>
+                Acreditamos que a advocacia vai além da interpretação das leis. Envolve ouvir,
+                orientar e oferecer caminhos jurídicos adequados às necessidades de cada pessoa.
+              </p>
+              <p class="mb-0">
+                Por isso, valorizamos um atendimento próximo, uma comunicação clara e o
+                acompanhamento responsável em cada demanda.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         4. NOSSOS VALORES — 3 cartões
+         ============================================================== -->
+    <section id="valores" class="secao secao--clara">
+      <div class="container">
+
+        <!-- Título padrão das seções (estilo no CSS, seção 4.1) -->
+        <div class="titulo-secao titulo-secao--centro revelar">
+          <p class="sobretitulo">Nossos valores</p>
+          <h2>O que orienta cada atendimento.</h2>
+        </div>
+
+        <!-- [RESPONSIVO] col-md-4
+             Celular: os 3 cartões ficam um embaixo do outro.
+             A partir de 768px: 3 lado a lado (4 + 4 + 4 = 12).
+             g-4: espaço entre os cartões. -->
+        <div class="row g-4">
+          <div class="col-md-4">
+            <!-- <article>: um bloco de conteúdo que faz sentido sozinho -->
+            <article class="cartao-pilar revelar">
+              <span class="icone-circulo"><i class="bi bi-shield-check" aria-hidden="true"></i></span>
+              <h3>Ética profissional</h3>
+              <p>Conduta transparente e responsável em todas as etapas, conforme o Código de Ética da OAB.</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="cartao-pilar revelar">
+              <span class="icone-circulo"><i class="bi bi-journal-text" aria-hidden="true"></i></span>
+              <h3>Conhecimento jurídico</h3>
+              <p>Estudo cuidadoso de cada demanda para indicar o caminho jurídico mais adequado.</p>
+            </article>
+          </div>
+          <div class="col-md-4">
+            <article class="cartao-pilar revelar">
+              <span class="icone-circulo"><i class="bi bi-chat-dots" aria-hidden="true"></i></span>
+              <h3>Atendimento próximo</h3>
+              <p>Atendimento 24h durante 7 dias da semana com linguagem clara, do primeiro contato ao encerramento do caso.</p>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         5. ÁREAS DE ATUAÇÃO — 6 cartões
+         --------------------------------------------------------------
+         [RESPONSIVO] col-md-6 col-lg-4
+         Celular (até 767px):    1 cartão por linha  → 6 linhas
+         Tablet (768 a 991px):   2 por linha (6 + 6) → 3 linhas
+         Computador (992px+):    3 por linha (4+4+4) → 2 linhas
+         É o melhor exemplo de grid responsivo do site.
+         ============================================================== -->
+    <section id="areas" class="secao secao--escura">
+      <div class="container">
+
+        <div class="titulo-secao titulo-secao--centro revelar">
+          <p class="sobretitulo">Áreas de atuação</p>
+          <h2>Atuação em diferentes áreas do Direito.</h2>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-4">
+            <article class="cartao-area revelar">
+              <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+              <h3>Direito Civil</h3>
+              <p>Contratos, indenizações, cobranças e questões de propriedade.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="cartao-area revelar">
+              <i class="bi bi-people" aria-hidden="true"></i>
+              <h3>Família e Sucessões</h3>
+              <p>Divórcio, guarda, pensão alimentícia, inventário e testamento.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="cartao-area revelar">
+              <i class="bi bi-bag-check" aria-hidden="true"></i>
+              <h3>Direito do Consumidor</h3>
+              <p>Cobranças indevidas, produtos com defeito e falhas na prestação de serviços.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="cartao-area revelar">
+              <i class="bi bi-briefcase" aria-hidden="true"></i>
+              <h3>Direito Trabalhista</h3>
+              <p>Rescisões, verbas trabalhistas e acordos entre empregados e empresas.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="cartao-area revelar">
+              <i class="bi bi-calendar-check" aria-hidden="true"></i>
+              <h3>Direito Previdenciário</h3>
+              <p>Aposentadorias, auxílios e outros benefícios do INSS.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-lg-4">
+            <article class="cartao-area revelar">
+              <i class="bi bi-building" aria-hidden="true"></i>
+              <h3>Direito Empresarial</h3>
+              <p>Abertura de empresas, contratos societários e assessoria preventiva.</p>
+            </article>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         6. FAIXA DOURADA — chamada para o WhatsApp
+         --------------------------------------------------------------
+         [RESPONSIVO] col-lg-8 + col-lg-4 text-lg-end
+         Celular: texto em cima, botão embaixo, tudo à esquerda.
+         A partir de 992px: texto à esquerda (8 colunas) e botão
+         à direita (4 colunas, alinhado no fim com text-lg-end).
+         ============================================================== -->
+    <section class="chamada">
+      <div class="container">
+        <div class="row align-items-center gy-4">
+          <div class="col-lg-8 revelar">
+            <h2>Quero entender o meu caso.</h2>
+            <p class="mb-0">Conte a sua situação pelo WhatsApp. O retorno é feito diretamente por uma de nossas advogadas.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end revelar">
+            <!-- data-whatsapp="texto" → este botão manda uma mensagem própria -->
+            <a class="btn btn-claro btn-lg" href="#contato"
+               data-whatsapp="Olá! Gostaria de explicar a minha situação e entender quais são as opções.">
+              <i class="bi bi-whatsapp" aria-hidden="true"></i> Falar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         7. NÚMEROS — com contagem animada
+         --------------------------------------------------------------
+         data-contador="600" → o JavaScript conta de 0 até 600.
+         ATENÇÃO: ao trocar um número, mude o data-contador E o
+         número escrito dentro do <span>.
+
+         [RESPONSIVO] col-6 col-lg-3
+         Celular e tablet: 2 números por linha (6 + 6) → 2 linhas.
+         A partir de 992px: 4 lado a lado (3+3+3+3) → 1 linha.
+         ============================================================== -->
+    <section class="secao secao--clara">
+      <div class="container">
+
+        <div class="titulo-secao revelar">
+          <p class="sobretitulo">Trajetória</p>
+          <h2>Experiência construída caso a caso.</h2>
+        </div>
+
+        <div class="row g-4 numeros">
+          <div class="col-6 col-lg-3">
+            <div class="numero-item revelar">
+              <p class="numero">+<span data-contador="15">15</span></p>
+              <h3>anos de atuação</h3>
+              <p>Experiência em diferentes áreas do Direito.</p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="numero-item revelar">
+              <p class="numero">+<span data-contador="600">600</span></p>
+              <h3>casos acompanhados</h3>
+              <p>Em demandas judiciais e extrajudiciais.</p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="numero-item revelar">
+              <p class="numero"><span data-contador="6">6</span></p>
+              <h3>áreas de atuação</h3>
+              <p>Atendimento completo em um só escritório.</p>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3">
+            <div class="numero-item revelar">
+              <p class="numero"><span data-contador="27">27</span></p>
+              <h3>estados atendidos</h3>
+              <p>Atuação on-line pelo processo eletrônico.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         8. AS ADVOGADAS — dois perfis
+         --------------------------------------------------------------
+         [RESPONSIVO] col-md-6
+         Celular: um perfil embaixo do outro.
+         A partir de 768px: os dois lado a lado (6 + 6).
+         ============================================================== -->
+    <section id="advogadas" class="secao secao--escura">
+      <div class="container">
+
+        <div class="titulo-secao titulo-secao--centro revelar">
+          <p class="sobretitulo">As advogadas</p>
+          <h2>Quem acompanha o seu caso.</h2>
+        </div>
+
+        <div class="row gy-5 gx-lg-5">
+
+          <!-- Perfil 1 -->
+          <div class="col-md-6">
+            <article class="perfil revelar">
+              <figure class="moldura">
+                <!-- [RESPONSIVO] Imagem responsiva: versões de 600px e 1200px.
+                     A partir de 992px a foto ocupa cerca de 600px na tela. -->
+                <img src="img/advogada-nunes-1200.jpg"
+                     srcset="img/advogada-nunes-600.jpg 600w, img/advogada-nunes-1200.jpg 1200w"
+                     sizes="(min-width: 992px) 600px, (min-width: 576px) 416px, 100vw"
+                     alt="Retrato da Dra. Sâmia Gabriela Nunes"
+                     width="1200" height="2133" loading="lazy">
+              </figure>
+              <h3 class="perfil-nome">Dra. Sâmia Gabriela Nunes</h3>
+              <p class="registro-oab">Sócia · OAB/RO nº 7064</p>
+            </article>
+          </div>
+
+          <!-- Perfil 2 -->
+          <div class="col-md-6">
+            <article class="perfil revelar">
+              <figure class="moldura">
+                <img src="img/advogada-pinheiro-1200.jpg"
+                     srcset="img/advogada-pinheiro-600.jpg 600w, img/advogada-pinheiro-1200.jpg 1200w"
+                     sizes="(min-width: 992px) 600px, (min-width: 576px) 416px, 100vw"
+                     alt="Retrato da Dra. Solônia Pinheiro"
+                     width="1200" height="1600" loading="lazy">
+              </figure>
+              <h3 class="perfil-nome">Dra. Solônia Pinheiro</h3>
+              <p class="registro-oab">Sócia · OAB/RO nº 16.294</p>
+            </article>
+          </div>
+
+        </div>
+
+        <!-- text-center: centraliza o botão; mt-5: espaço grande em cima -->
+        <div class="text-center mt-5 revelar">
+          <a class="btn btn-dourado btn-lg" href="#contato" data-whatsapp>
+            <i class="bi bi-whatsapp" aria-hidden="true"></i> Agende um atendimento
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         9. DÚVIDAS FREQUENTES — componente "Accordion" do Bootstrap
+         --------------------------------------------------------------
+         Cada pergunta abre e fecha ao ser tocada.
+         data-bs-target="#duvida-2" → qual resposta abrir.
+         data-bs-parent → quando uma abre, as outras fecham.
+         O acordeão é ótimo no celular: o texto fica guardado e a
+         página não fica comprida demais.
+
+         [RESPONSIVO] col-lg-9 + justify-content-center
+         A partir de 992px, as perguntas ocupam 9 de 12 colunas,
+         centralizadas, para as linhas não ficarem compridas demais.
+         ============================================================== -->
+    <section id="duvidas" class="secao">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-9">
+
+            <div class="titulo-secao titulo-secao--centro revelar">
+              <p class="sobretitulo">Dúvidas frequentes</p>
+              <h2>Antes de falar com a gente.</h2>
+            </div>
+
+            <div class="accordion acordeao revelar" id="lista-duvidas">
+
+              <!-- Pergunta 1 (começa aberta: classe "show") -->
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#duvida-1" aria-expanded="true" aria-controls="duvida-1">
+                    Em quais áreas o escritório atua?
+                  </button>
+                </h3>
+                <div id="duvida-1" class="accordion-collapse collapse show" data-bs-parent="#lista-duvidas">
+                  <div class="accordion-body">
+                    Atuamos em diferentes áreas do Direito, como Civil, Família e Sucessões, Consumidor,
+                    Trabalhista, Previdenciário e Empresarial. Se a sua questão não estiver nessa lista,
+                    entre em contato e orientamos sobre o caminho adequado.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pergunta 2 (começa fechada: classe "collapsed" no botão) -->
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#duvida-2" aria-expanded="false" aria-controls="duvida-2">
+                    Como funciona o primeiro atendimento?
+                  </button>
+                </h3>
+                <div id="duvida-2" class="accordion-collapse collapse" data-bs-parent="#lista-duvidas">
+                  <div class="accordion-body">
+                    Você conta a sua situação pelo WhatsApp ou pessoalmente. Analisamos o caso, explicamos
+                    os caminhos possíveis e apresentamos a proposta de honorários antes de qualquer contratação.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pergunta 3 -->
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#duvida-3" aria-expanded="false" aria-controls="duvida-3">
+                    O atendimento pode ser on-line?
+                  </button>
+                </h3>
+                <div id="duvida-3" class="accordion-collapse collapse" data-bs-parent="#lista-duvidas">
+                  <div class="accordion-body">
+                    Sim. Com reuniões por videochamada e o processo eletrônico, atendemos clientes de
+                    outras cidades e estados sem que precisem se deslocar até o escritório.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Pergunta 4 -->
+              <div class="accordion-item">
+                <h3 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                          data-bs-target="#duvida-4" aria-expanded="false" aria-controls="duvida-4">
+                    Como vou acompanhar o meu processo?
+                  </button>
+                </h3>
+                <div id="duvida-4" class="accordion-collapse collapse" data-bs-parent="#lista-duvidas">
+                  <div class="accordion-body">
+                    Você recebe um aviso a cada movimentação, com a explicação do que ela significa e
+                    de quais são os próximos passos.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ==============================================================
+         10. CONTATO — informações + mapa
+         --------------------------------------------------------------
+         [RESPONSIVO] col-lg-5 + col-lg-7
+         Celular e tablet: dados de contato em cima, mapa embaixo.
+         A partir de 992px: dados à esquerda, mapa à direita.
+
+         O mapa é um <iframe>: uma "janela" que mostra uma página do
+         Google Maps dentro da nossa. Para mudar o local, troque o
+         endereço depois de "q=" no src do iframe e depois de
+         "destination=" no botão "Como chegar".
+         (Nos endereços de internet, espaço vira %20 ou + e
+         vírgula vira %2C.)
+         ============================================================== -->
+    <section id="contato" class="secao secao--clara">
+      <div class="container">
+        <div class="row gy-5 gx-lg-5">
+
+          <!-- Dados de contato -->
+          <div class="col-lg-5">
+            <div class="revelar">
+              <p class="sobretitulo">Contato</p>
+              <h2 class="titulo-grande">Onde estamos.</h2>
+              <p>Venha ao escritório ou fale com a gente pelo WhatsApp.</p>
+
+              <ul class="lista-contato">
+                <li>
+                  <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                  <div><strong>WhatsApp</strong><span>(69) 99379-9550</span></div>
+                </li>
+                <li>
+                  <i class="bi bi-envelope" aria-hidden="true"></i>
+                  <div><strong>E-mail</strong><span>adv.associados.pvh@gmail.com</span></div>
+                </li>
+                <li>
+                  <i class="bi bi-geo-alt" aria-hidden="true"></i>
+                  <div><strong>Endereço</strong><span>R. Padre Chiquinho, 1867, sala 2 · Centro · Porto Velho/RO</span></div>
+                </li>
+                <li>
+                  <i class="bi bi-clock" aria-hidden="true"></i>
+                  <div><strong>Horário</strong><span>Segunda a segunda, 24h por dia</span></div>
+                </li>
+              </ul>
+
+              <!-- [RESPONSIVO] d-flex flex-wrap gap-3: botões lado a lado;
+                   numa tela estreita, o segundo desce para a linha de baixo.
+                   target="_blank": abre em outra aba.
+                   rel="noopener noreferrer": segurança ao abrir outra aba. -->
+              <div class="d-flex flex-wrap gap-3 mt-4">
+                <a class="btn btn-dourado" href="https://www.google.com/maps/dir/?api=1&amp;destination=Rua+Padre+Chiquinho%2C+1867%2C+Porto+Velho+-+RO"
+                   target="_blank" rel="noopener noreferrer">
+                  <i class="bi bi-signpost-2" aria-hidden="true"></i> Como chegar
+                </a>
+                <a class="btn btn-contorno-escuro" href="#contato" data-whatsapp>
+                  <i class="bi bi-whatsapp" aria-hidden="true"></i> Falar no WhatsApp
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mapa (o tamanho dele é definido no CSS, seção 5.10) -->
+          <div class="col-lg-7">
+            <div class="mapa revelar">
+              <iframe src="https://maps.google.com/maps?q=Rua%20Padre%20Chiquinho%2C%201867%2C%20Porto%20Velho%20-%20RO&amp;z=16&amp;output=embed"
+                      title="Mapa com a localização do escritório Nunes &amp; Pinheiro Advogados"
+                      loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ================================================================
+       11. RODAPÉ
+       ----------------------------------------------------------------
+       [RESPONSIVO] col-lg-5 / col-sm-6 col-lg-3
+       Celular (até 575px): os 3 blocos um embaixo do outro.
+       576 a 991px: logo em cima; "Navegação" e "Contato" lado a lado.
+       A partir de 992px: os 3 blocos lado a lado.
+       ================================================================ -->
+  <footer class="rodape">
+    <div class="container">
+      <div class="row gy-5">
+
+        <div class="col-lg-5">
+          <img src="img/logo.svg" alt="Nunes &amp; Pinheiro Advogados" class="rodape-logo" width="848" height="275" loading="lazy">
+          <p class="mt-4">Escritório de advocacia com atuação em diferentes áreas do Direito. Atendimento presencial em Porto Velho/RO e on-line em todo o Brasil.</p>
+        </div>
+
+        <div class="col-sm-6 col-lg-3 offset-lg-1">
+          <h2 class="rodape-titulo">Navegação</h2>
+          <ul class="rodape-links">
+            <li><a href="#escritorio">O escritório</a></li>
+            <li><a href="#areas">Áreas de atuação</a></li>
+            <li><a href="#advogadas">As advogadas</a></li>
+            <li><a href="#duvidas">Dúvidas</a></li>
+            <li><a href="#contato">Contato</a></li>
+          </ul>
+        </div>
+
+        <div class="col-sm-6 col-lg-3">
+          <h2 class="rodape-titulo">Contato</h2>
+          <ul class="rodape-links">
+            <li>(69) 99379-9550</li>
+            <li>adv.associados.pvh@gmail.com</li>
+            <li>R. Padre Chiquinho, 1867, sala 2<br>Centro · Porto Velho/RO</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="rodape-base">
+        <!-- O ano é preenchido automaticamente pelo JavaScript -->
+        <p>© <span id="ano-atual">2026</span> Nunes &amp; Pinheiro Advogados · OAB/RO nº 16.924 · Todos os direitos reservados.</p>
+        <p>Conteúdo de caráter informativo.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ================================================================
+       12. BOTÃO FLUTUANTE DO WHATSAPP (canto de baixo, à direita)
+       Fica fora do <main> porque não faz parte do conteúdo: ele
+       "flutua" sobre a página (position: fixed no CSS).
+       ================================================================ -->
+  <a class="whatsapp-flutuante" href="#contato" data-whatsapp aria-label="Conversar pelo WhatsApp">
+    <i class="bi bi-whatsapp" aria-hidden="true"></i>
+  </a>
+
+
+  <!-- ================================================================
+       JAVASCRIPT
+       Fica no fim do <body>: assim o navegador primeiro mostra a
+       página e só depois carrega os scripts.
+       1º o Bootstrap (o menu ☰, o acordeão e o ScrollSpy precisam dele)
+       2º o nosso script, que usa o Bootstrap
+       ================================================================ -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

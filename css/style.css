@@ -1,0 +1,1196 @@
+/* ==============================================================
+   ESTILO DO SITE — NUNES & PINHEIRO ADVOGADOS
+   ==============================================================
+
+   O QUE É ESTE ARQUIVO?
+   É o CSS: a "roupa" do site. O HTML diz O QUE existe na página
+   (um título, uma foto, um botão). O CSS diz COMO aquilo aparece
+   (cor, tamanho, espaço, posição).
+
+   Este arquivo trabalha junto com o Bootstrap. O Bootstrap já traz
+   pronto o grid (colunas), o menu e outros componentes. Aqui ficam
+   as cores, as fontes e os detalhes que deixam o site com a cara
+   do escritório.
+
+   COMO LER UMA REGRA DE CSS
+       seletor {
+         propriedade: valor;
+       }
+   Exemplo:
+       .hero-titulo {          ← "seletor": em quem a regra vale
+         color: white;         ← "propriedade: valor;"
+       }
+   Um ponto antes do nome (.hero-titulo) significa "elementos com
+   class="hero-titulo" no HTML".
+
+   PROCURE POR [RESPONSIVO]
+   Tudo o que faz o site se adaptar ao tamanho da tela está marcado
+   com [RESPONSIVO] nos comentários. Use Ctrl+F para encontrar.
+
+   ÍNDICE
+     1. Variáveis (cores, fontes, medidas)  ← comece por aqui
+     2. Ajustes no Bootstrap
+     3. Base (regras gerais)
+     4. Componentes que se repetem
+        4.1 Sobretítulo e título de seção
+        4.2 Botões
+        4.3 Moldura das fotos
+     5. Seções (na ordem em que aparecem na página)
+        5.1 Cabeçalho        5.7  Números
+        5.2 Topo (hero)      5.8  As advogadas
+        5.3 O escritório     5.9  Dúvidas
+        5.4 Valores          5.10 Contato (mapa)
+        5.5 Áreas            5.11 Rodapé
+        5.6 Faixa dourada
+     6. Botão flutuante do WhatsApp
+     7. Animações
+     8. RESPONSIVIDADE (media queries) ← parte principal do TCC
+   ============================================================== */
+
+
+/* ==============================================================
+   1. VARIÁVEIS
+   --------------------------------------------------------------
+   Uma variável guarda um valor com um nome. Em vez de escrever
+   #c9a227 em vinte lugares, escrevemos var(--cor-dourado).
+   Se um dia a cor mudar, muda aqui e o site inteiro acompanha.
+
+   :root  = a página inteira (as variáveis valem em todo lugar)
+   --nome = é assim que se cria uma variável no CSS
+   ============================================================== */
+:root {
+  /* ---------- Cores ---------- */
+  --cor-escuro: #15171b;          /* fundo das seções escuras */
+  --cor-escuro-2: #1d2025;        /* cartões sobre o fundo escuro */
+  --cor-escuro-3: #0f1013;        /* rodapé */
+  --cor-dourado: #c9a227;         /* dourado da logo (bordas, botões) */
+  --cor-dourado-claro: #d4b14a;   /* dourado para texto sobre fundo escuro */
+  --cor-dourado-escuro: #7a6110;  /* dourado para texto sobre fundo claro */
+  --cor-dourado-profundo: #5f4b0c;/* links ao passar o mouse */
+  --cor-claro: #f4f3f0;           /* fundo das seções claras */
+  --cor-branco: #ffffff;
+  --cor-texto: #24262b;           /* texto principal */
+  --cor-texto-suave: #5f636b;     /* texto secundário */
+  --cor-texto-no-escuro: #c9cbcf; /* texto sobre fundo escuro */
+  --cor-texto-no-escuro-suave: #9da1a8;
+  --cor-linha: #e2dfd8;           /* linhas e bordas sobre fundo claro */
+  --cor-linha-escuro: rgba(255, 255, 255, 0.1); /* linhas sobre fundo escuro */
+  --cor-whatsapp: #25d366;
+
+  /* ---------- Fontes ----------
+     Se a primeira fonte não carregar, o navegador usa a seguinte
+     da lista (por isso há várias, separadas por vírgula). */
+  --fonte-titulo: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --fonte-texto: 'Manrope', 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* ---------- Medidas ---------- */
+
+  /* Altura do cabeçalho fixo. No celular ele é mais baixo;
+     a seção 8 muda este valor para telas grandes. [RESPONSIVO] */
+  --altura-cabecalho: 84px;
+
+  /* [RESPONSIVO] clamp(MÍNIMO, IDEAL, MÁXIMO)
+     O espaço em cima e embaixo de cada seção cresce junto com a
+     tela, mas nunca fica menor que 4.5rem nem maior que 7.5rem.
+     9vw = 9% da largura da tela (vw = "viewport width").
+     Assim não precisamos de media query para isso. */
+  --espaco-secao: clamp(4.5rem, 9vw, 7.5rem);
+
+  /* Tamanho mínimo de qualquer coisa que se toca com o dedo
+     (botões e links). 44px é a recomendação de acessibilidade
+     (WCAG) e da Apple. [RESPONSIVO] */
+  --alvo-toque: 2.75rem; /* 2.75rem = 44px */
+
+  --raio: 3px;           /* cantos levemente arredondados */
+  --sombra: 0 24px 48px -24px rgba(15, 16, 19, 0.35);
+  --transicao: 0.3s ease;
+}
+
+/* UNIDADES QUE APARECEM NESTE ARQUIVO
+   px  → pixel. Medida fixa.
+   rem → relativa ao tamanho da letra do navegador (normalmente
+         16px). 1rem = 16px, 2rem = 32px. Se a pessoa aumentar a
+         letra nas configurações do celular, tudo em rem acompanha.
+   em  → relativa ao tamanho da letra do próprio elemento.
+   %   → porcentagem do elemento "pai" (o que está em volta).
+   vw  → 1% da largura da tela. 100vw = a tela inteira.
+   ch  → largura de um caractere. 65ch ≈ 65 letras por linha.     */
+
+
+/* ==============================================================
+   2. AJUSTES NO BOOTSTRAP
+   --------------------------------------------------------------
+   O Bootstrap também usa variáveis (todas começam com --bs-).
+   Trocando o valor delas, o Bootstrap passa a usar as nossas
+   cores e fontes, sem precisar mexer nos arquivos dele.
+   ============================================================== */
+:root {
+  --bs-body-font-family: var(--fonte-texto);
+  --bs-body-color: var(--cor-texto);
+  --bs-body-bg: var(--cor-branco);
+  --bs-body-line-height: 1.7;                 /* espaço entre linhas */
+  --bs-link-color-rgb: 122, 97, 16;           /* = --cor-dourado-escuro */
+  --bs-link-hover-color-rgb: 95, 75, 12;      /* = --cor-dourado-profundo */
+  --bs-border-radius: var(--raio);
+  --bs-border-radius-lg: var(--raio);
+  --bs-border-radius-sm: var(--raio);
+}
+
+
+/* ==============================================================
+   3. BASE — regras que valem para a página inteira
+   ============================================================== */
+
+/* Quando se clica num link do menu, a página rola até a seção.
+   Sem esta regra, o título da seção ficaria escondido atrás do
+   cabeçalho fixo. scroll-padding-top "desconta" a altura dele. */
+html {
+  scroll-padding-top: calc(var(--altura-cabecalho) - 8px);
+}
+
+body {
+  font-size: 1.0625rem; /* 17px — confortável para ler no celular */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Títulos */
+h1, h2, h3, h4 {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  line-height: 1.1;
+  color: inherit;      /* usa a mesma cor do texto da seção */
+  text-wrap: balance;  /* divide o título em linhas de tamanho parecido */
+}
+
+/* [RESPONSIVO] Parágrafos com no máximo ~65 letras por linha.
+   Em telas largas, linhas muito compridas cansam a leitura. */
+p {
+  max-width: 65ch;
+}
+
+/* [RESPONSIVO] IMAGENS FLEXÍVEIS — um dos 3 pilares do design
+   responsivo. max-width: 100% impede que uma imagem fique mais
+   larga que o espaço onde está. height: auto mantém a proporção
+   (a foto diminui sem ficar achatada). */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Cor do texto quando a pessoa seleciona com o mouse */
+::selection {
+  background: var(--cor-dourado);
+  color: var(--cor-escuro);
+}
+
+/* Acessibilidade: contorno visível em quem está selecionado pelo
+   teclado (tecla TAB). */
+:focus-visible {
+  outline: 2px solid var(--cor-dourado);
+  outline-offset: 3px;
+}
+
+/* Link "Pular para o conteúdo": fica escondido e só aparece
+   quando alguém navega pelo teclado. */
+.pular-conteudo {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.6rem 1rem;
+  background: var(--cor-branco);
+  color: var(--cor-texto);
+}
+
+/* ---------- Seções ----------
+   Toda <section class="secao"> ganha o mesmo espaço em cima e
+   embaixo. padding-block = padding de cima + padding de baixo. */
+.secao {
+  padding-block: var(--espaco-secao);
+}
+
+.secao--clara {
+  background-color: var(--cor-claro);
+}
+
+.secao--escura {
+  background-color: var(--cor-escuro);
+  color: var(--cor-texto-no-escuro);
+}
+
+.secao--escura h2,
+.secao--escura h3 {
+  color: var(--cor-branco);
+}
+
+
+/* ==============================================================
+   4. COMPONENTES QUE SE REPETEM
+   --------------------------------------------------------------
+   Classes usadas em várias partes do site. Escrevemos uma vez e
+   reaproveitamos.
+   ============================================================== */
+
+/* ---------- 4.1 Sobretítulo e título de seção ---------- */
+
+/* Texto pequeno em letras maiúsculas acima dos títulos, com um
+   traço dourado antes. Ex.: "—— NOSSOS VALORES" */
+.sobretitulo {
+  display: flex;          /* coloca o traço e o texto lado a lado */
+  align-items: center;    /* alinha os dois pelo meio */
+  gap: 0.85rem;           /* espaço entre o traço e o texto */
+  max-width: none;
+  margin-bottom: 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;  /* espaço entre as letras */
+  text-transform: uppercase; /* deixa tudo em MAIÚSCULAS */
+  color: var(--cor-dourado-escuro);
+}
+
+/* ::before cria um elemento "de mentira" antes do texto.
+   Aqui ele vira o traço: 2.5rem de largura e 1px de altura. */
+.sobretitulo::before {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background-color: currentColor; /* mesma cor do texto */
+}
+
+.secao--escura .sobretitulo,
+.hero .sobretitulo {
+  color: var(--cor-dourado-claro);
+}
+
+.titulo-secao {
+  max-width: 44rem;
+  margin-bottom: 3.5rem;
+}
+
+/* [RESPONSIVO] Título que cresce com a tela:
+   no mínimo 2.2rem (celular), no máximo 3.3rem (computador). */
+.titulo-secao h2,
+.titulo-grande {
+  font-size: clamp(2.2rem, 4.2vw, 3.3rem);
+  margin-bottom: 1.25rem;
+}
+
+/* Versão centralizada do título (traço dos dois lados) */
+.titulo-secao--centro {
+  margin-inline: auto;   /* margem automática dos lados = centraliza */
+  text-align: center;
+}
+
+.titulo-secao--centro .sobretitulo {
+  justify-content: center;
+}
+
+.titulo-secao--centro .sobretitulo::after {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background-color: currentColor;
+}
+
+.texto-destaque {
+  font-size: 1.15rem;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 4.2 Botões ----------
+   O Bootstrap já tem a classe .btn. Aqui só mudamos o visual.
+   Os botões do Bootstrap são configurados por variáveis
+   (--bs-btn-...), então para criar um botão novo basta trocar
+   essas variáveis. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;                 /* espaço entre o ícone e o texto */
+  min-height: var(--alvo-toque); /* [RESPONSIVO] pelo menos 44px de altura,
+                                    fácil de tocar com o dedo */
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.btn-lg {
+  --bs-btn-padding-y: 1rem;
+  --bs-btn-padding-x: 1.75rem;
+  --bs-btn-font-size: 0.85rem;
+}
+
+.btn-sm {
+  --bs-btn-padding-y: 0.6rem;
+  --bs-btn-padding-x: 1.1rem;
+  --bs-btn-font-size: 0.75rem;
+}
+
+.btn .bi {
+  font-size: 1.15em; /* ícone um pouco maior que o texto */
+}
+
+/* Botão dourado (principal): fundo dourado da logo, texto escuro */
+.btn-dourado {
+  --bs-btn-color: var(--cor-escuro);
+  --bs-btn-bg: var(--cor-dourado);
+  --bs-btn-border-color: var(--cor-dourado);
+  --bs-btn-hover-color: var(--cor-escuro);
+  --bs-btn-hover-bg: var(--cor-dourado-claro);
+  --bs-btn-hover-border-color: var(--cor-dourado-claro);
+  --bs-btn-active-color: var(--cor-escuro);
+  --bs-btn-active-bg: var(--cor-dourado-claro);
+  --bs-btn-active-border-color: var(--cor-dourado-claro);
+  --bs-btn-focus-shadow-rgb: 201, 162, 39;
+}
+
+/* Botão só com contorno branco (usado sobre fundo escuro) */
+.btn-contorno {
+  --bs-btn-color: var(--cor-branco);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: rgba(255, 255, 255, 0.35);
+  --bs-btn-hover-color: var(--cor-escuro);
+  --bs-btn-hover-bg: var(--cor-branco);
+  --bs-btn-hover-border-color: var(--cor-branco);
+  --bs-btn-active-color: var(--cor-escuro);
+  --bs-btn-active-bg: var(--cor-branco);
+  --bs-btn-active-border-color: var(--cor-branco);
+  --bs-btn-focus-shadow-rgb: 255, 255, 255;
+}
+
+/* Botão só com contorno escuro (usado sobre fundo claro) */
+.btn-contorno-escuro {
+  --bs-btn-color: var(--cor-escuro);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--cor-escuro);
+  --bs-btn-hover-color: var(--cor-branco);
+  --bs-btn-hover-bg: var(--cor-escuro);
+  --bs-btn-hover-border-color: var(--cor-escuro);
+  --bs-btn-active-color: var(--cor-branco);
+  --bs-btn-active-bg: var(--cor-escuro);
+  --bs-btn-active-border-color: var(--cor-escuro);
+  --bs-btn-focus-shadow-rgb: 21, 23, 27;
+}
+
+/* Botão branco (usado na faixa dourada) */
+.btn-claro {
+  --bs-btn-color: var(--cor-escuro);
+  --bs-btn-bg: var(--cor-branco);
+  --bs-btn-border-color: var(--cor-branco);
+  --bs-btn-hover-color: var(--cor-branco);
+  --bs-btn-hover-bg: var(--cor-escuro);
+  --bs-btn-hover-border-color: var(--cor-escuro);
+  --bs-btn-active-color: var(--cor-branco);
+  --bs-btn-active-bg: var(--cor-escuro);
+  --bs-btn-active-border-color: var(--cor-escuro);
+  --bs-btn-focus-shadow-rgb: 255, 255, 255;
+}
+
+
+/* ---------- 4.3 Moldura das fotos ----------
+   A linha dourada deslocada atrás das fotos. Ela é desenhada
+   pelo ::before (um elemento "de mentira" atrás da imagem). */
+.moldura {
+  position: relative;          /* serve de referência para o ::before */
+  margin: 0 0 1.5rem 1.5rem;   /* sobra espaço para a linha aparecer */
+  /* [RESPONSIVO] No celular e no tablet, a foto ocupa a coluna
+     toda e ficaria enorme no tablet. Por isso tem no máximo 26rem
+     (416px). Em telas grandes esse limite sai (seção 8). */
+  max-width: 26rem;
+}
+
+.moldura::before {
+  content: "";
+  position: absolute;          /* posicionado em relação à .moldura */
+  inset: 1.5rem 1.5rem -1.5rem -1.5rem; /* distância: topo, direita, baixo, esquerda */
+  border: 1px solid var(--cor-dourado);
+}
+
+/* [RESPONSIVO] aspect-ratio + object-fit
+   aspect-ratio: 4 / 5 → a caixa da foto sempre tem formato
+   "retrato" (4 de largura para 5 de altura), em qualquer tela.
+   object-fit: cover → a foto preenche a caixa toda sem ficar
+   esticada ou achatada; o que sobra é cortado nas bordas. */
+.moldura img {
+  position: relative;          /* fica por cima da linha dourada */
+  width: 100%;                 /* ocupa a largura da coluna */
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+
+/* Variação para foto deitada (paisagem), como a da reunião.
+   3 / 2 é o formato das fotos de câmera. */
+.moldura--paisagem img {
+  aspect-ratio: 3 / 2;
+}
+
+
+/* ==============================================================
+   5. SEÇÕES (na ordem da página)
+   --------------------------------------------------------------
+   Aqui estão os estilos pensados primeiro para o CELULAR.
+   As mudanças para telas maiores estão todas na seção 8.
+   ============================================================== */
+
+/* ---------- 5.1 Cabeçalho ---------- */
+.cabecalho {
+  /* Variáveis do menu (navbar) do Bootstrap */
+  --bs-navbar-color: rgba(255, 255, 255, 0.78);       /* links */
+  --bs-navbar-hover-color: var(--cor-branco);         /* link com o mouse em cima */
+  --bs-navbar-active-color: var(--cor-dourado-claro); /* link da seção atual */
+  --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.3);
+  --bs-navbar-toggler-focus-width: 2px;
+  /* [RESPONSIVO] botão do menu (☰) com 44px de altura, fácil de tocar */
+  --bs-navbar-toggler-padding-y: 0.4rem;
+
+  /* env(safe-area-inset-top) = espaço do "entalhe" (notch) da
+     câmera em iPhones. Assim o menu não fica embaixo dele. */
+  padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
+  padding-bottom: 1.1rem;
+  transition: background-color var(--transicao), padding var(--transicao), box-shadow var(--transicao);
+}
+
+/* Cabeçalho depois de rolar a página ou com o menu aberto.
+   Estas classes são colocadas pelo JavaScript. */
+.cabecalho--rolado,
+.cabecalho--aberto {
+  padding-top: calc(0.6rem + env(safe-area-inset-top, 0px));
+  padding-bottom: 0.6rem;
+  background-color: rgba(21, 23, 27, 0.97);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* [RESPONSIVO] Logo: 48px de altura no celular.
+   Na seção 8 ela cresce para 64px em telas grandes.
+   width: auto → a largura acompanha a altura, sem distorcer. */
+.cabecalho-logo {
+  height: 48px;
+  width: auto;
+  transition: height var(--transicao);
+}
+
+.cabecalho .nav-link {
+  position: relative;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* [RESPONSIVO] MENU NO CELULAR
+   Quando o menu "hambúrguer" (☰) é aberto, os links aparecem
+   empilhados dentro de um painel escuro. Na seção 8, para telas
+   grandes, o painel some e os links ficam lado a lado. */
+.cabecalho .navbar-collapse {
+  margin-top: 1rem;
+  padding: 0.5rem 1.25rem 1.25rem;
+  background-color: var(--cor-escuro-2);
+  border: 1px solid var(--cor-linha-escuro);
+}
+
+.cabecalho .nav-link {
+  padding-block: 0.85rem;   /* link alto, fácil de tocar */
+  border-bottom: 1px solid var(--cor-linha-escuro);
+}
+
+/* Traço dourado embaixo do link da seção atual.
+   No celular ele fica escondido (display: none);
+   aparece só em telas grandes (seção 8). */
+.cabecalho .nav-link::after {
+  content: "";
+  position: absolute;
+  left: var(--bs-navbar-nav-link-padding-x);
+  right: var(--bs-navbar-nav-link-padding-x);
+  bottom: 0.25rem;
+  height: 1px;
+  background-color: var(--cor-dourado-claro);
+  transform: scaleX(0);     /* começa com largura zero (invisível) */
+  transition: transform var(--transicao);
+  display: none;
+}
+
+.cabecalho .nav-link:hover::after,
+.cabecalho .nav-link.active::after {
+  transform: scaleX(1);     /* ganha a largura toda */
+}
+
+
+/* ---------- 5.2 Topo (hero) ----------
+   "Hero" é o nome que se dá à primeira área grande do site. */
+.hero {
+  position: relative;
+  isolation: isolate; /* cria uma "camada" própria para o ::before ficar atrás do texto */
+  /* O espaço de cima soma a altura do cabeçalho fixo, senão o
+     texto ficaria escondido embaixo dele. */
+  padding-top: calc(var(--altura-cabecalho) + clamp(3.5rem, 9vw, 7rem));
+  padding-bottom: clamp(4.5rem, 9vw, 7.5rem);
+  color: var(--cor-texto-no-escuro);
+
+  /* [RESPONSIVO] IMAGEM DE FUNDO LEVE NO CELULAR
+     O celular baixa a versão de 800px (32 KB). Telas maiores
+     trocam para a de 1600px na seção 8. Quem abre no celular
+     não precisa baixar uma imagem enorme que nem vai ver. */
+  background: var(--cor-escuro) url("../img/fundo-hero-800.jpg") center / cover no-repeat;
+}
+
+/* Camada escura por cima da foto de fundo, para o texto ficar
+   legível. linear-gradient = degradê. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;        /* ocupa a área toda do hero */
+  z-index: -1;     /* fica atrás do texto */
+  background: linear-gradient(100deg,
+    rgba(21, 23, 27, 0.97) 0%,
+    rgba(21, 23, 27, 0.88) 50%,
+    rgba(21, 23, 27, 0.6) 100%);
+}
+
+/* [RESPONSIVO] TIPOGRAFIA FLUIDA: o título principal vai de
+   2.7rem (celular) até 4.6rem (computador), crescendo aos poucos
+   conforme a tela (6vw). Nunca estoura a tela pequena. */
+.hero-titulo {
+  font-size: clamp(2.7rem, 6vw, 4.6rem);
+  font-weight: 600;
+  color: var(--cor-branco);
+  margin-bottom: 1.75rem;
+}
+
+/* A palavra "Direito." em itálico dourado */
+.hero-titulo em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--cor-dourado-claro);
+}
+
+.hero-texto {
+  font-size: 1.15rem;
+  max-width: 34rem;
+  margin-bottom: 2.5rem;
+}
+
+/* [RESPONSIVO] No celular, os dois botões do topo ocupam a
+   largura toda (um embaixo do outro), mais fáceis de tocar.
+   Na seção 8 eles voltam ao tamanho normal. */
+.hero .btn-lg {
+  width: 100%;
+}
+
+/* [RESPONSIVO] flex-wrap: wrap → se os selos não couberem lado a
+   lado, eles "quebram" para a linha de baixo, em vez de sair da
+   tela. */
+.hero-selos {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;   /* 0.75rem entre linhas, 1.5rem entre itens */
+  margin: 3rem 0 0;
+  padding: 1.75rem 0 0;
+  border-top: 1px solid var(--cor-linha-escuro);
+  font-size: 0.9rem;
+  color: var(--cor-texto-no-escuro-suave);
+}
+
+.hero-selos li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hero-selos .bi {
+  color: var(--cor-dourado-claro);
+}
+
+/* [RESPONSIVO] Foto do topo QUADRADA no celular e no tablet,
+   para o topo não ficar comprido demais. Em telas grandes ela
+   volta a ser retrato (seção 8). */
+.hero .moldura img {
+  aspect-ratio: 1 / 1;
+}
+
+
+/* ---------- 5.3 O escritório ----------
+   Usa só componentes que já existem (.moldura, .titulo-grande).
+   A foto da reunião usa .moldura--paisagem (seção 4.3). */
+
+
+/* ---------- 5.4 Valores (3 cartões) ---------- */
+.cartao-pilar {
+  height: 100%;   /* cartões da mesma linha ficam com a mesma altura */
+  padding: 2.5rem 2rem;
+  background-color: var(--cor-branco);
+  border: 1px solid var(--cor-linha);
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+/* :hover = quando o mouse está em cima */
+.cartao-pilar:hover {
+  transform: translateY(-6px);   /* sobe 6px */
+  box-shadow: var(--sombra);
+}
+
+.cartao-pilar h3 {
+  font-size: 1.75rem;
+  margin: 1.75rem 0 0.75rem;
+}
+
+.cartao-pilar p {
+  margin-bottom: 0;
+  color: var(--cor-texto-suave);
+}
+
+/* Círculo com o ícone dentro */
+.icone-circulo {
+  display: grid;
+  place-items: center;   /* centraliza o ícone no meio do círculo */
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--cor-dourado);
+  border-radius: 50%;    /* 50% de arredondamento = círculo */
+  font-size: 1.4rem;
+  color: var(--cor-dourado-escuro);
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+.cartao-pilar:hover .icone-circulo {
+  background-color: var(--cor-dourado-escuro);
+  color: var(--cor-branco);
+}
+
+
+/* ---------- 5.5 Áreas de atuação (6 cartões) ---------- */
+.cartao-area {
+  height: 100%;
+  padding: 2.25rem 2rem;
+  background-color: var(--cor-escuro-2);
+  border: 1px solid var(--cor-linha-escuro);
+  transition: border-color var(--transicao), transform var(--transicao);
+}
+
+.cartao-area:hover {
+  border-color: var(--cor-dourado);
+  transform: translateY(-4px);
+}
+
+.cartao-area .bi {
+  font-size: 1.9rem;
+  color: var(--cor-dourado-claro);
+}
+
+.cartao-area h3 {
+  font-size: 1.65rem;
+  margin: 1.25rem 0 0.6rem;
+}
+
+.cartao-area p {
+  margin-bottom: 0;
+  color: var(--cor-texto-no-escuro-suave);
+}
+
+
+/* ---------- 5.6 Faixa dourada (chamada para o WhatsApp) ---------- */
+.chamada {
+  padding-block: clamp(3.5rem, 7vw, 5rem);  /* [RESPONSIVO] espaço fluido */
+  background-color: var(--cor-dourado);
+  color: var(--cor-escuro);
+}
+
+.chamada h2 {
+  font-size: clamp(2rem, 4vw, 3rem);       /* [RESPONSIVO] título fluido */
+  margin-bottom: 0.75rem;
+}
+
+.chamada p {
+  font-size: 1.1rem;
+  color: rgba(21, 23, 27, 0.82);
+}
+
+
+/* ---------- 5.7 Números ---------- */
+.numero-item {
+  height: 100%;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--cor-dourado);
+}
+
+.numero {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(3rem, 6vw, 4.5rem);     /* [RESPONSIVO] número fluido */
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cor-dourado-escuro);
+  font-variant-numeric: tabular-nums;      /* todos os algarismos com a mesma largura,
+                                              para o número não "tremer" na contagem */
+  margin-bottom: 0.75rem;
+}
+
+/* [RESPONSIVO] Legenda do número um pouco menor no celular,
+   onde cada número ocupa só metade da tela. Cresce na seção 8. */
+.numero-item h3 {
+  font-family: var(--fonte-texto);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.numero-item p:last-child {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 5.8 As advogadas ---------- */
+.perfil {
+  height: 100%;
+}
+
+.perfil .moldura {
+  margin-bottom: 3rem;   /* espaço para a linha dourada antes do nome */
+}
+
+.perfil-nome {
+  font-size: clamp(1.9rem, 3vw, 2.4rem);  /* [RESPONSIVO] nome fluido */
+  margin-bottom: 0.5rem;
+}
+
+.registro-oab {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cor-dourado-claro);
+  margin-bottom: 1.25rem;
+}
+
+
+/* ---------- 5.9 Dúvidas (acordeão do Bootstrap) ---------- */
+.acordeao {
+  /* Mudamos o visual do acordeão trocando as variáveis dele */
+  --bs-accordion-bg: transparent;
+  --bs-accordion-border-color: var(--cor-linha);
+  --bs-accordion-border-radius: 0;
+  --bs-accordion-inner-border-radius: 0;
+  --bs-accordion-btn-padding-x: 0;
+  --bs-accordion-btn-padding-y: 1.5rem;
+  --bs-accordion-body-padding-x: 0;
+  --bs-accordion-body-padding-y: 0;
+  --bs-accordion-btn-color: var(--cor-texto);
+  --bs-accordion-active-color: var(--cor-dourado-escuro);
+  --bs-accordion-active-bg: transparent;
+  --bs-accordion-btn-focus-box-shadow: none;
+  /* Setinha dourada da pergunta aberta (um desenho SVG escrito dentro do CSS) */
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237a6110' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+}
+
+.acordeao .accordion-item {
+  border-width: 0 0 1px;   /* só a linha de baixo */
+}
+
+.acordeao .accordion-item:first-of-type {
+  border-top-width: 1px;   /* a primeira pergunta ganha linha em cima também */
+}
+
+.acordeao .accordion-button {
+  font-family: var(--fonte-titulo);
+  font-size: 1.45rem;
+  font-weight: 600;
+  gap: 1rem;
+}
+
+.acordeao .accordion-button:focus-visible {
+  outline: 2px solid var(--cor-dourado);
+  outline-offset: 2px;
+}
+
+.acordeao .accordion-body {
+  padding-bottom: 1.75rem;
+  color: var(--cor-texto-suave);
+  max-width: 65ch;
+}
+
+
+/* ---------- 5.10 Contato (mapa) ---------- */
+.lista-contato {
+  list-style: none;     /* tira as bolinhas da lista */
+  padding: 0;
+  margin: 2.25rem 0 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.lista-contato li {
+  display: flex;        /* ícone e texto lado a lado */
+  gap: 1rem;
+}
+
+.lista-contato .bi {
+  font-size: 1.25rem;
+  color: var(--cor-dourado-escuro);
+  line-height: 1.5;
+}
+
+.lista-contato strong {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* [RESPONSIVO] overflow-wrap: anywhere → se o e-mail não couber
+   numa tela estreita, ele quebra a linha em vez de sair da tela. */
+.lista-contato span {
+  color: var(--cor-texto-suave);
+  overflow-wrap: anywhere;
+}
+
+/* [RESPONSIVO] MAPA FLEXÍVEL
+   O mapa é um <iframe> (uma página do Google dentro da nossa).
+   width: 100% faz ele ocupar a largura da coluna em qualquer tela.
+   No celular tem 20rem de altura; em telas maiores cresce (seção 8). */
+.mapa {
+  height: 100%;          /* no computador acompanha a altura da coluna de texto */
+  min-height: 20rem;
+  background-color: var(--cor-claro);
+  border: 1px solid var(--cor-linha);
+  box-shadow: var(--sombra);
+}
+
+.mapa iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 20rem;
+  border: 0;             /* iframes vêm com borda; aqui tiramos */
+}
+
+
+/* ---------- 5.11 Rodapé ---------- */
+.rodape {
+  padding-top: clamp(4rem, 8vw, 6rem);
+  /* [RESPONSIVO] No celular sobra espaço embaixo para o botão
+     flutuante do WhatsApp não cobrir o texto do rodapé. */
+  padding-bottom: 6rem;
+  background-color: var(--cor-escuro-3);
+  color: var(--cor-texto-no-escuro-suave);
+  font-size: 0.95rem;
+}
+
+.rodape-logo {
+  height: 84px;
+  width: auto;
+}
+
+.rodape-titulo {
+  font-family: var(--fonte-texto);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cor-dourado-claro);
+  margin-bottom: 1.25rem;
+}
+
+.rodape-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.rodape a {
+  color: var(--cor-texto-no-escuro);
+  text-decoration: none;    /* tira o sublinhado */
+  transition: color var(--transicao);
+}
+
+/* [RESPONSIVO] Links do rodapé com 44px de altura, para o dedo
+   acertar o link certo no celular. */
+.rodape-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--alvo-toque);
+}
+
+.rodape a:hover {
+  color: var(--cor-dourado-claro);
+}
+
+/* [RESPONSIVO] Linha final do rodapé: flex-wrap deixa os dois
+   textos lado a lado no computador e um embaixo do outro no
+   celular, sem precisar de media query. */
+.rodape-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-top: 4rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--cor-linha-escuro);
+  font-size: 0.82rem;
+}
+
+.rodape-base p {
+  margin: 0;
+}
+
+
+/* ==============================================================
+   6. BOTÃO FLUTUANTE DO WHATSAPP
+   --------------------------------------------------------------
+   position: fixed → o botão fica "grudado" no canto da tela,
+   mesmo quando a página rola.
+   ============================================================== */
+.whatsapp-flutuante {
+  position: fixed;
+  right: 1.25rem;
+  /* safe-area-inset-bottom = espaço da barra de gestos do iPhone */
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  z-index: 1040;          /* fica por cima do resto da página */
+  display: grid;
+  place-items: center;
+  /* [RESPONSIVO] 3.4rem (54px) no celular; cresce na seção 8 */
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background-color: var(--cor-whatsapp);
+  color: var(--cor-branco);
+  font-size: 1.55rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transicao);
+}
+
+.whatsapp-flutuante:hover,
+.whatsapp-flutuante:focus-visible {
+  color: var(--cor-branco);
+  transform: scale(1.08);   /* aumenta 8% */
+}
+
+
+/* ==============================================================
+   7. ANIMAÇÕES
+   --------------------------------------------------------------
+   @media (prefers-reduced-motion: no-preference) = "só se a pessoa
+   NÃO pediu para reduzir os movimentos" nas configurações do
+   celular ou do computador. Quem sente enjoo ou tontura com
+   animações pode desligá-las no sistema, e o site respeita.
+   ============================================================== */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* 7.1 Entrada do topo: cada item aparece um pouco depois do outro */
+  .hero .entrada {
+    animation: subir 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero .entrada:nth-child(2) { animation-delay: 0.1s; }
+  .hero .entrada:nth-child(3) { animation-delay: 0.2s; }
+  .hero .entrada:nth-child(4) { animation-delay: 0.3s; }
+  .hero .entrada:nth-child(5) { animation-delay: 0.4s; }
+  .hero .moldura.entrada      { animation-delay: 0.25s; }
+
+  /* 7.2 Elementos que aparecem suavemente ao rolar a página.
+     O JavaScript coloca a classe .visivel quando o elemento entra
+     na tela. ".js" garante que, se o JavaScript falhar, nada
+     fica escondido. */
+  .js .revelar {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .js .revelar.visivel {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 7.3 Anel pulsando em volta do botão do WhatsApp */
+  .whatsapp-flutuante::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--cor-whatsapp);
+    animation: pulsar 2.4s ease-out infinite;
+  }
+}
+
+/* @keyframes descreve os "quadros" de uma animação:
+   como o elemento começa (from) e como termina (to). */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes pulsar {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+
+/* ==============================================================
+   8. RESPONSIVIDADE — MEDIA QUERIES                [RESPONSIVO]
+   ==============================================================
+
+   O QUE É UMA MEDIA QUERY?
+   É uma regra que só vale quando a tela tem certa característica.
+       @media (min-width: 992px) { ... }
+   lê-se: "se a tela tiver NO MÍNIMO 992px de largura, aplique o
+   que está dentro das chaves".
+
+   ESTRATÉGIA "MOBILE FIRST" (celular primeiro)
+   Tudo o que está nas seções 1 a 7 foi escrito pensando no
+   CELULAR. Aqui embaixo só ficam os AJUSTES para telas MAIORES,
+   sempre com min-width. O Bootstrap trabalha do mesmo jeito.
+   Vantagens:
+     • o celular (aparelho mais fraco e com internet mais lenta)
+       lê menos regras e baixa imagens menores;
+     • obriga a pensar primeiro no que é essencial.
+
+   BREAKPOINTS (pontos de quebra)
+   São as larguras onde o layout muda. Usamos os mesmos do
+   Bootstrap, para o CSS e o grid mudarem juntos:
+       sm  ≥ 576px   celulares grandes deitados
+       md  ≥ 768px   tablets em pé
+       lg  ≥ 992px   tablets deitados e notebooks
+       xl  ≥ 1200px  computadores
+       xxl ≥ 1400px  telas grandes
+
+   Abaixo de 576px valem só as regras das seções 1 a 7.
+   ============================================================== */
+
+
+/* ---------- A partir de 576px (sm) ---------- */
+@media (min-width: 576px) {
+
+  /* Os botões do topo deixam de ocupar a largura toda
+     e ficam lado a lado */
+  .hero .btn-lg {
+    width: auto;
+  }
+
+  /* Legenda dos números volta ao tamanho normal */
+  .numero-item h3 {
+    font-size: 0.85rem;
+  }
+
+  /* Mapa um pouco mais alto */
+  .mapa,
+  .mapa iframe {
+    min-height: 24rem;
+  }
+}
+
+
+/* ---------- A partir de 768px (md) ---------- */
+@media (min-width: 768px) {
+
+  /* Imagem de fundo do topo em alta resolução (1600px).
+     Só telas a partir de tablet baixam esta versão. */
+  .hero {
+    background-image: url("../img/fundo-hero-1600.jpg");
+  }
+
+  /* Mais espaço entre os selos do topo */
+  .hero-selos {
+    gap: 0.75rem 2rem;
+  }
+
+  /* Botão flutuante um pouco maior */
+  .whatsapp-flutuante {
+    width: 3.75rem;
+    height: 3.75rem;
+    font-size: 1.75rem;
+  }
+
+  /* O rodapé não precisa mais da folga para o botão flutuante,
+     porque o texto não chega até o canto direito */
+  .rodape {
+    padding-bottom: 2rem;
+  }
+}
+
+
+/* ---------- A partir de 992px (lg) ----------
+   É aqui que o site vira "versão de computador": o menu
+   hambúrguer some (classe navbar-expand-lg do HTML) e as colunas
+   ficam lado a lado (classes col-lg-* do HTML). */
+@media (min-width: 992px) {
+
+  /* Cabeçalho mais alto, então o desconto de rolagem também muda */
+  :root {
+    --altura-cabecalho: 96px;
+  }
+
+  /* Logo maior */
+  .cabecalho-logo {
+    height: 64px;
+  }
+
+  .cabecalho--rolado .cabecalho-logo {
+    height: 54px;   /* diminui um pouco quando a página rola */
+  }
+
+  /* O menu deixa de ser um painel: sem fundo, sem borda,
+     links lado a lado (o Bootstrap cuida de colocar lado a lado) */
+  .cabecalho .navbar-collapse {
+    margin-top: 0;
+    padding: 0;
+    background-color: transparent;
+    border: 0;
+  }
+
+  .cabecalho .nav-link {
+    padding-block: 0.5rem;
+    border-bottom: 0;
+  }
+
+  /* Volta a mostrar o traço dourado embaixo do link ativo */
+  .cabecalho .nav-link::after {
+    display: block;
+  }
+
+  /* As fotos deixam de ter largura máxima: agora estão em colunas
+     estreitas, lado a lado com o texto */
+  .moldura {
+    max-width: none;
+  }
+
+  /* A foto do topo volta ao formato retrato (4 x 5) */
+  .hero .moldura img {
+    aspect-ratio: 4 / 5;
+  }
+
+  /* A foto da reunião acompanha a altura do texto ao lado */
+  .moldura--paisagem img {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+
+/* ---------- Celular DEITADO (tela baixa) ----------
+   Nem toda media query é sobre largura. Esta usa:
+     orientation: landscape → aparelho na horizontal
+     max-height: 500px      → tela com pouca altura
+   Com o celular deitado sobra pouca altura, e o cabeçalho fixo
+   ocuparia um quarto da tela. Então ele fica mais baixo. */
+@media (orientation: landscape) and (max-height: 500px) {
+  :root {
+    --altura-cabecalho: 64px;
+  }
+
+  .cabecalho,
+  .cabecalho--rolado {
+    padding-top: calc(0.4rem + env(safe-area-inset-top, 0px));
+    padding-bottom: 0.4rem;
+  }
+
+  .cabecalho-logo,
+  .cabecalho--rolado .cabecalho-logo {
+    height: 40px;
+  }
+}
