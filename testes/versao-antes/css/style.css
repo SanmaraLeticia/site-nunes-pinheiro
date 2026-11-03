@@ -1,0 +1,941 @@
+/* ==============================================================
+   ESTILO DO SITE — NUNES & PINHEIRO ADVOGADOS
+   --------------------------------------------------------------
+   Este arquivo complementa o Bootstrap. O Bootstrap cuida do
+   grid, do menu e dos componentes; aqui ficam a identidade
+   visual (cores, fontes) e os detalhes de cada seção.
+
+   ÍNDICE
+     1. Variáveis (cores, fontes, medidas)  ← comece por aqui
+     2. Ajustes no Bootstrap
+     3. Base (elementos gerais)
+     4. Componentes reutilizáveis
+        4.1 Sobretítulo e título de seção
+        4.2 Botões
+        4.3 Moldura das fotos
+     5. Seções (na ordem da página)
+        5.1 Cabeçalho        5.6  Chamada
+        5.2 Hero             5.7  Números
+        5.3 O escritório     5.8  As advogadas
+        5.4 Valores          5.9  Dúvidas (acordeão)
+        5.5 Áreas de atuação 5.10 Contato (mapa)
+                             5.11 Rodapé
+     6. Botão flutuante do WhatsApp
+     7. Animações
+     8. Responsivo (tablet e celular)
+   ============================================================== */
+
+
+/* ==============================================================
+   1. VARIÁVEIS
+   Variáveis CSS (custom properties) guardam valores que se
+   repetem. Mudou aqui, muda no site inteiro.
+   Uso: color: var(--cor-dourado);
+   ============================================================== */
+:root {
+  /* --- Cores --- */
+  --cor-escuro: #15171b;          /* fundo das seções escuras */
+  --cor-escuro-2: #1d2025;        /* cartões sobre o fundo escuro */
+  --cor-escuro-3: #0f1013;        /* rodapé */
+  --cor-dourado: #c9a227;         /* dourado da logo (detalhes, bordas) */
+  --cor-dourado-claro: #d4b14a;   /* dourado para texto sobre fundo escuro */
+  --cor-dourado-escuro: #7a6110;  /* dourado para botões e texto sobre fundo claro */
+  --cor-dourado-profundo: #5f4b0c;/* botão ao passar o mouse */
+  --cor-claro: #f4f3f0;           /* fundo das seções claras */
+  --cor-branco: #ffffff;
+  --cor-texto: #24262b;           /* texto principal */
+  --cor-texto-suave: #5f636b;     /* texto secundário */
+  --cor-texto-no-escuro: #c9cbcf; /* texto sobre fundo escuro */
+  --cor-texto-no-escuro-suave: #9da1a8;
+  --cor-linha: #e2dfd8;           /* bordas sobre fundo claro */
+  --cor-linha-escuro: rgba(255, 255, 255, 0.1); /* bordas sobre fundo escuro */
+  --cor-whatsapp: #25d366;
+
+  /* --- Fontes --- */
+  --fonte-titulo: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --fonte-texto: 'Manrope', 'Segoe UI', Roboto, Arial, sans-serif;
+
+  /* --- Medidas --- */
+  --altura-cabecalho: 96px;
+  --espaco-secao: clamp(4.5rem, 9vw, 7.5rem); /* clamp(mínimo, ideal, máximo) */
+  --raio: 3px;
+  --sombra: 0 24px 48px -24px rgba(15, 16, 19, 0.35);
+  --transicao: 0.3s ease;
+}
+
+
+/* ==============================================================
+   2. AJUSTES NO BOOTSTRAP
+   O Bootstrap 5.3 também usa variáveis CSS (começam com --bs-).
+   Redefinindo algumas, ele passa a usar nossas cores e fontes.
+   ============================================================== */
+:root {
+  --bs-body-font-family: var(--fonte-texto);
+  --bs-body-color: var(--cor-texto);
+  --bs-body-bg: var(--cor-branco);
+  --bs-body-line-height: 1.7;
+  --bs-link-color-rgb: 122, 97, 16;          /* = --cor-dourado-escuro */
+  --bs-link-hover-color-rgb: 95, 75, 12;     /* = --cor-dourado-profundo */
+  --bs-border-radius: var(--raio);
+  --bs-border-radius-lg: var(--raio);
+  --bs-border-radius-sm: var(--raio);
+}
+
+
+/* ==============================================================
+   3. BASE
+   ============================================================== */
+
+/* Faz os links do menu pararem ABAIXO do cabeçalho fixo */
+html {
+  scroll-padding-top: calc(var(--altura-cabecalho) - 8px);
+}
+
+body {
+  font-size: 1.0625rem; /* 17px */
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  line-height: 1.1;
+  color: inherit;     /* títulos usam a mesma cor do texto da seção */
+  text-wrap: balance; /* quebra os títulos em linhas equilibradas */
+}
+
+p {
+  max-width: 65ch; /* linhas de texto com no máximo ~65 caracteres */
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+::selection {
+  background: var(--cor-dourado);
+  color: var(--cor-escuro);
+}
+
+/* Contorno visível quando se navega pelo teclado (TAB) */
+:focus-visible {
+  outline: 2px solid var(--cor-dourado);
+  outline-offset: 3px;
+}
+
+/* Link "Pular para o conteúdo" */
+.pular-conteudo {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2000;
+  padding: 0.6rem 1rem;
+  background: var(--cor-branco);
+  color: var(--cor-texto);
+}
+
+/* --- Seções: espaçamento e variações de fundo --- */
+.secao {
+  padding-block: var(--espaco-secao);
+}
+
+.secao--clara {
+  background-color: var(--cor-claro);
+}
+
+.secao--escura {
+  background-color: var(--cor-escuro);
+  color: var(--cor-texto-no-escuro);
+}
+
+.secao--escura h2,
+.secao--escura h3 {
+  color: var(--cor-branco);
+}
+
+
+/* ==============================================================
+   4. COMPONENTES REUTILIZÁVEIS
+   Classes usadas em várias seções.
+   ============================================================== */
+
+/* ---------- 4.1 Sobretítulo e título de seção ---------- */
+
+/* Texto pequeno em maiúsculas acima dos títulos, com um traço antes */
+.sobretitulo {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: none; /* anula o limite de 65ch do <p> para centralizar direito */
+  margin-bottom: 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cor-dourado-escuro);
+}
+
+.sobretitulo::before {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background-color: currentColor; /* usa a mesma cor do texto */
+}
+
+.secao--escura .sobretitulo,
+.hero .sobretitulo {
+  color: var(--cor-dourado-claro);
+}
+
+.titulo-secao {
+  max-width: 44rem;
+  margin-bottom: 3.5rem;
+}
+
+.titulo-secao h2,
+.titulo-grande {
+  font-size: clamp(2.2rem, 4.2vw, 3.3rem);
+  margin-bottom: 1.25rem;
+}
+
+/* Variação centralizada */
+.titulo-secao--centro {
+  margin-inline: auto;
+  text-align: center;
+}
+
+.titulo-secao--centro .sobretitulo {
+  justify-content: center;
+}
+
+.titulo-secao--centro .sobretitulo::after {
+  content: "";
+  width: 2.5rem;
+  height: 1px;
+  background-color: currentColor;
+}
+
+.texto-destaque {
+  font-size: 1.15rem;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 4.2 Botões ----------
+   Os botões do Bootstrap também são configurados por variáveis
+   (--bs-btn-...). Criamos novos estilos só trocando essas variáveis. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.btn-lg {
+  --bs-btn-padding-y: 1rem;
+  --bs-btn-padding-x: 1.75rem;
+  --bs-btn-font-size: 0.85rem;
+}
+
+.btn-sm {
+  --bs-btn-padding-y: 0.6rem;
+  --bs-btn-padding-x: 1.1rem;
+  --bs-btn-font-size: 0.75rem;
+}
+
+.btn .bi {
+  font-size: 1.15em;
+}
+
+/* Botão dourado (principal) — mesmo dourado da logo, texto escuro */
+.btn-dourado {
+  --bs-btn-color: var(--cor-escuro);
+  --bs-btn-bg: var(--cor-dourado);
+  --bs-btn-border-color: var(--cor-dourado);
+  --bs-btn-hover-color: var(--cor-escuro);
+  --bs-btn-hover-bg: var(--cor-dourado-claro);
+  --bs-btn-hover-border-color: var(--cor-dourado-claro);
+  --bs-btn-active-color: var(--cor-escuro);
+  --bs-btn-active-bg: var(--cor-dourado-claro);
+  --bs-btn-active-border-color: var(--cor-dourado-claro);
+  --bs-btn-focus-shadow-rgb: 201, 162, 39;
+}
+
+/* Botão com contorno branco (para fundo escuro) */
+.btn-contorno {
+  --bs-btn-color: var(--cor-branco);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: rgba(255, 255, 255, 0.35);
+  --bs-btn-hover-color: var(--cor-escuro);
+  --bs-btn-hover-bg: var(--cor-branco);
+  --bs-btn-hover-border-color: var(--cor-branco);
+  --bs-btn-active-color: var(--cor-escuro);
+  --bs-btn-active-bg: var(--cor-branco);
+  --bs-btn-active-border-color: var(--cor-branco);
+  --bs-btn-focus-shadow-rgb: 255, 255, 255;
+}
+
+/* Botão com contorno escuro (para fundo claro) */
+.btn-contorno-escuro {
+  --bs-btn-color: var(--cor-escuro);
+  --bs-btn-bg: transparent;
+  --bs-btn-border-color: var(--cor-escuro);
+  --bs-btn-hover-color: var(--cor-branco);
+  --bs-btn-hover-bg: var(--cor-escuro);
+  --bs-btn-hover-border-color: var(--cor-escuro);
+  --bs-btn-active-color: var(--cor-branco);
+  --bs-btn-active-bg: var(--cor-escuro);
+  --bs-btn-active-border-color: var(--cor-escuro);
+  --bs-btn-focus-shadow-rgb: 21, 23, 27;
+}
+
+/* Botão branco (para a faixa dourada) */
+.btn-claro {
+  --bs-btn-color: var(--cor-escuro);
+  --bs-btn-bg: var(--cor-branco);
+  --bs-btn-border-color: var(--cor-branco);
+  --bs-btn-hover-color: var(--cor-branco);
+  --bs-btn-hover-bg: var(--cor-escuro);
+  --bs-btn-hover-border-color: var(--cor-escuro);
+  --bs-btn-active-color: var(--cor-branco);
+  --bs-btn-active-bg: var(--cor-escuro);
+  --bs-btn-active-border-color: var(--cor-escuro);
+  --bs-btn-focus-shadow-rgb: 255, 255, 255;
+}
+
+
+/* ---------- 4.3 Moldura das fotos ----------
+   Uma linha dourada deslocada atrás da foto, criada com ::before */
+.moldura {
+  position: relative;
+  margin: 0 0 1.5rem 1.5rem; /* espaço para a linha aparecer */
+}
+
+.moldura::before {
+  content: "";
+  position: absolute;
+  inset: 1.5rem 1.5rem -1.5rem -1.5rem; /* topo, direita, baixo, esquerda */
+  border: 1px solid var(--cor-dourado);
+}
+
+.moldura img {
+  position: relative; /* fica por cima da linha */
+  width: 100%;
+  aspect-ratio: 4 / 5;   /* proporção retrato */
+  object-fit: cover;     /* corta a foto sem distorcer */
+}
+
+
+
+/* ==============================================================
+   5. SEÇÕES
+   ============================================================== */
+
+/* ---------- 5.1 Cabeçalho ---------- */
+.cabecalho {
+  /* variáveis da navbar do Bootstrap */
+  --bs-navbar-color: rgba(255, 255, 255, 0.78);
+  --bs-navbar-hover-color: var(--cor-branco);
+  --bs-navbar-active-color: var(--cor-dourado-claro);
+  --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.3);
+  --bs-navbar-toggler-focus-width: 2px;
+
+  padding-top: calc(1.1rem + env(safe-area-inset-top, 0px));
+  padding-bottom: 1.1rem;
+  transition: background-color var(--transicao), padding var(--transicao), box-shadow var(--transicao);
+}
+
+/* Estado depois de rolar a página (classe colocada pelo JavaScript) */
+.cabecalho--rolado,
+.cabecalho--aberto {
+  padding-top: calc(0.6rem + env(safe-area-inset-top, 0px));
+  padding-bottom: 0.6rem;
+  background-color: rgba(21, 23, 27, 0.97);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.cabecalho-logo {
+  height: 64px;
+  width: auto;
+  transition: height var(--transicao);
+}
+
+.cabecalho--rolado .cabecalho-logo {
+  height: 54px;
+}
+
+.cabecalho .nav-link {
+  position: relative;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Traço dourado embaixo do link ativo (o ScrollSpy coloca a classe .active) */
+.cabecalho .nav-link::after {
+  content: "";
+  position: absolute;
+  left: var(--bs-navbar-nav-link-padding-x);
+  right: var(--bs-navbar-nav-link-padding-x);
+  bottom: 0.25rem;
+  height: 1px;
+  background-color: var(--cor-dourado-claro);
+  transform: scaleX(0);
+  transition: transform var(--transicao);
+}
+
+.cabecalho .nav-link:hover::after,
+.cabecalho .nav-link.active::after {
+  transform: scaleX(1);
+}
+
+
+/* ---------- 5.2 Hero ---------- */
+.hero {
+  position: relative;
+  isolation: isolate; /* cria uma "camada" própria para o ::before */
+  padding-top: calc(var(--altura-cabecalho) + clamp(3.5rem, 9vw, 7rem));
+  padding-bottom: clamp(4.5rem, 9vw, 7.5rem);
+  color: var(--cor-texto-no-escuro);
+  /* TROQUE A IMAGEM DE FUNDO AQUI */
+  background: var(--cor-escuro) url("../img/fundo-hero.jpg") center / cover no-repeat;
+}
+
+/* Camada escura por cima da foto, para o texto ficar legível */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(100deg,
+    rgba(21, 23, 27, 0.97) 0%,
+    rgba(21, 23, 27, 0.88) 50%,
+    rgba(21, 23, 27, 0.6) 100%);
+}
+
+.hero-titulo {
+  font-size: clamp(2.7rem, 6vw, 4.6rem);
+  font-weight: 600;
+  color: var(--cor-branco);
+  margin-bottom: 1.75rem;
+}
+
+/* A palavra em itálico dourado dentro do título */
+.hero-titulo em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--cor-dourado-claro);
+}
+
+.hero-texto {
+  font-size: 1.15rem;
+  max-width: 34rem;
+  margin-bottom: 2.5rem;
+}
+
+.hero-selos {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin: 3rem 0 0;
+  padding: 1.75rem 0 0;
+  border-top: 1px solid var(--cor-linha-escuro);
+  font-size: 0.9rem;
+  color: var(--cor-texto-no-escuro-suave);
+}
+
+.hero-selos li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hero-selos .bi {
+  color: var(--cor-dourado-claro);
+}
+
+
+/* ---------- 5.3 O escritório ----------
+   Usa apenas componentes reutilizáveis (moldura, titulo-grande). */
+
+
+/* ---------- 5.4 Valores (cartões) ---------- */
+.cartao-pilar {
+  height: 100%; /* cartões da mesma linha ficam com a mesma altura */
+  padding: 2.5rem 2rem;
+  background-color: var(--cor-branco);
+  border: 1px solid var(--cor-linha);
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+
+.cartao-pilar:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra);
+}
+
+.cartao-pilar h3 {
+  font-size: 1.75rem;
+  margin: 1.75rem 0 0.75rem;
+}
+
+.cartao-pilar p {
+  margin-bottom: 0;
+  color: var(--cor-texto-suave);
+}
+
+.icone-circulo {
+  display: grid;
+  place-items: center; /* centraliza o ícone */
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--cor-dourado);
+  border-radius: 50%;
+  font-size: 1.4rem;
+  color: var(--cor-dourado-escuro);
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+.cartao-pilar:hover .icone-circulo {
+  background-color: var(--cor-dourado-escuro);
+  color: var(--cor-branco);
+}
+
+
+/* ---------- 5.5 Áreas de atuação ---------- */
+.cartao-area {
+  height: 100%;
+  padding: 2.25rem 2rem;
+  background-color: var(--cor-escuro-2);
+  border: 1px solid var(--cor-linha-escuro);
+  transition: border-color var(--transicao), transform var(--transicao);
+}
+
+.cartao-area:hover {
+  border-color: var(--cor-dourado);
+  transform: translateY(-4px);
+}
+
+.cartao-area .bi {
+  font-size: 1.9rem;
+  color: var(--cor-dourado-claro);
+}
+
+.cartao-area h3 {
+  font-size: 1.65rem;
+  margin: 1.25rem 0 0.6rem;
+}
+
+.cartao-area p {
+  margin-bottom: 0;
+  color: var(--cor-texto-no-escuro-suave);
+}
+
+
+/* ---------- 5.6 Chamada (faixa dourada) ---------- */
+.chamada {
+  padding-block: clamp(3.5rem, 7vw, 5rem);
+  background-color: var(--cor-dourado);
+  color: var(--cor-escuro);
+}
+
+.chamada h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 0.75rem;
+}
+
+.chamada p {
+  font-size: 1.1rem;
+  color: rgba(21, 23, 27, 0.82);
+}
+
+
+/* ---------- 5.7 Experiência (números) ---------- */
+.numero-item {
+  height: 100%;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--cor-dourado);
+}
+
+.numero {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--cor-dourado-escuro);
+  font-variant-numeric: tabular-nums; /* números com a mesma largura (não "pulam" na contagem) */
+  margin-bottom: 0.75rem;
+}
+
+.numero-item h3 {
+  font-family: var(--fonte-texto);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.numero-item p:last-child {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+  color: var(--cor-texto-suave);
+}
+
+
+/* ---------- 5.8 As advogadas ---------- */
+.perfil {
+  height: 100%;
+}
+
+.perfil .moldura {
+  margin-bottom: 3rem; /* espaço para a linha dourada antes do nome */
+}
+
+.perfil-nome {
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  margin-bottom: 0.5rem;
+}
+
+.registro-oab {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--cor-dourado-claro);
+  margin-bottom: 1.25rem;
+}
+
+.lista-formacao {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+
+.lista-formacao li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--cor-linha-escuro);
+}
+
+.lista-formacao li::before {
+  content: "—";
+  margin-right: 0.75rem;
+  color: var(--cor-dourado-claro);
+}
+
+
+/* ---------- 5.9 Dúvidas (acordeão) ---------- */
+.acordeao {
+  --bs-accordion-bg: transparent;
+  --bs-accordion-border-color: var(--cor-linha);
+  --bs-accordion-border-radius: 0;
+  --bs-accordion-inner-border-radius: 0;
+  --bs-accordion-btn-padding-x: 0;
+  --bs-accordion-btn-padding-y: 1.5rem;
+  --bs-accordion-body-padding-x: 0;
+  --bs-accordion-body-padding-y: 0;
+  --bs-accordion-btn-color: var(--cor-texto);
+  --bs-accordion-active-color: var(--cor-dourado-escuro);
+  --bs-accordion-active-bg: transparent;
+  --bs-accordion-btn-focus-box-shadow: none;
+  /* setinha dourada quando aberto (SVG dentro do CSS) */
+  --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%237a6110' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+}
+
+.acordeao .accordion-item {
+  border-width: 0 0 1px;
+}
+
+.acordeao .accordion-item:first-of-type {
+  border-top-width: 1px;
+}
+
+.acordeao .accordion-button {
+  font-family: var(--fonte-titulo);
+  font-size: 1.45rem;
+  font-weight: 600;
+  gap: 1rem;
+}
+
+.acordeao .accordion-button:focus-visible {
+  outline: 2px solid var(--cor-dourado);
+  outline-offset: 2px;
+}
+
+.acordeao .accordion-body {
+  padding-bottom: 1.75rem;
+  color: var(--cor-texto-suave);
+  max-width: 65ch;
+}
+
+
+/* ---------- 5.10 Contato (mapa) ---------- */
+.lista-contato {
+  list-style: none;
+  padding: 0;
+  margin: 2.25rem 0 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.lista-contato li {
+  display: flex;
+  gap: 1rem;
+}
+
+.lista-contato .bi {
+  font-size: 1.25rem;
+  color: var(--cor-dourado-escuro);
+  line-height: 1.5;
+}
+
+.lista-contato strong {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.lista-contato span {
+  color: var(--cor-texto-suave);
+  overflow-wrap: anywhere; /* quebra o e-mail se não couber */
+}
+
+/* Mapa do Google (iframe) */
+.mapa {
+  height: 100%;          /* no computador, acompanha a altura da coluna de texto */
+  min-height: 24rem;
+  background-color: var(--cor-claro);
+  border: 1px solid var(--cor-linha);
+  box-shadow: var(--sombra);
+}
+
+.mapa iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 24rem;
+  border: 0;             /* iframes têm borda por padrão */
+}
+
+
+/* ---------- 5.11 Rodapé ---------- */
+.rodape {
+  padding-top: clamp(4rem, 8vw, 6rem);
+  padding-bottom: 2rem;
+  background-color: var(--cor-escuro-3);
+  color: var(--cor-texto-no-escuro-suave);
+  font-size: 0.95rem;
+}
+
+.rodape-logo {
+  height: 84px;
+  width: auto;
+}
+
+.rodape-titulo {
+  font-family: var(--fonte-texto);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cor-dourado-claro);
+  margin-bottom: 1.25rem;
+}
+
+.rodape-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.rodape a {
+  color: var(--cor-texto-no-escuro);
+  text-decoration: none;
+  transition: color var(--transicao);
+}
+
+.rodape a:hover {
+  color: var(--cor-dourado-claro);
+}
+
+.rodape-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-top: 4rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--cor-linha-escuro);
+  font-size: 0.82rem;
+}
+
+.rodape-base p {
+  margin: 0;
+}
+
+
+/* ==============================================================
+   6. BOTÃO FLUTUANTE DO WHATSAPP
+   position: fixed → fica parado no canto mesmo ao rolar
+   ============================================================== */
+.whatsapp-flutuante {
+  position: fixed;
+  right: 1.25rem;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px));
+  z-index: 1040;
+  display: grid;
+  place-items: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: 50%;
+  background-color: var(--cor-whatsapp);
+  color: var(--cor-branco);
+  font-size: 1.75rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transicao);
+}
+
+.whatsapp-flutuante:hover,
+.whatsapp-flutuante:focus-visible {
+  color: var(--cor-branco);
+  transform: scale(1.08);
+}
+
+
+/* ==============================================================
+   7. ANIMAÇÕES
+   Só acontecem se o usuário NÃO pediu "reduzir movimento"
+   nas configurações do sistema (acessibilidade).
+   ============================================================== */
+@media (prefers-reduced-motion: no-preference) {
+
+  /* 7.1 Entrada do hero: cada item aparece um pouco depois do outro */
+  .hero .entrada {
+    animation: subir 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .hero .entrada:nth-child(2) { animation-delay: 0.1s; }
+  .hero .entrada:nth-child(3) { animation-delay: 0.2s; }
+  .hero .entrada:nth-child(4) { animation-delay: 0.3s; }
+  .hero .entrada:nth-child(5) { animation-delay: 0.4s; }
+  .hero .moldura.entrada      { animation-delay: 0.25s; }
+
+  /* 7.2 Elementos que aparecem ao rolar a página.
+     A classe .visivel é colocada pelo JavaScript (IntersectionObserver).
+     ".js" garante que, sem JavaScript, nada fica escondido. */
+  .js .revelar {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .js .revelar.visivel {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 7.3 Anel pulsando no botão do WhatsApp */
+  .whatsapp-flutuante::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--cor-whatsapp);
+    animation: pulsar 2.4s ease-out infinite;
+  }
+}
+
+/* @keyframes descreve os "quadros" de uma animação */
+@keyframes subir {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes pulsar {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+
+/* ==============================================================
+   8. RESPONSIVO
+   Os tamanhos seguem os "breakpoints" do Bootstrap:
+     lg = 992px  |  md = 768px  |  sm = 576px
+   ============================================================== */
+
+/* ----- Tablets e celulares (abaixo de 992px) ----- */
+@media (max-width: 991.98px) {
+
+  /* Menu aberto vira um painel escuro */
+  .cabecalho .navbar-collapse {
+    margin-top: 1rem;
+    padding: 0.5rem 1.25rem 1.25rem;
+    background-color: var(--cor-escuro-2);
+    border: 1px solid var(--cor-linha-escuro);
+  }
+
+  .cabecalho .nav-link {
+    padding-block: 0.85rem;
+    border-bottom: 1px solid var(--cor-linha-escuro);
+  }
+
+  .cabecalho .nav-link::after {
+    display: none;
+  }
+
+  .cabecalho-logo,
+  .cabecalho--rolado .cabecalho-logo {
+    height: 50px;
+  }
+
+  /* Fotos não ficam enormes no tablet */
+  .moldura {
+    max-width: 26rem;
+  }
+
+  /* Foto do topo mais baixa (quadrada), para o topo não ficar comprido demais */
+  .hero .moldura img {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* ----- Celulares (abaixo de 768px) ----- */
+@media (max-width: 767.98px) {
+
+
+  .hero-selos {
+    gap: 0.75rem 1.5rem;
+  }
+
+  .whatsapp-flutuante {
+    width: 3.4rem;
+    height: 3.4rem;
+    font-size: 1.55rem;
+  }
+}
+
+/* ----- Celulares pequenos (abaixo de 576px) ----- */
+@media (max-width: 575.98px) {
+  .hero .btn-lg {
+    width: 100%; /* botões ocupam a largura toda */
+  }
+
+  .numero-item h3 {
+    font-size: 0.78rem;
+  }
+
+  /* Mapa um pouco mais baixo no celular */
+  .mapa,
+  .mapa iframe {
+    min-height: 20rem;
+  }
+}
