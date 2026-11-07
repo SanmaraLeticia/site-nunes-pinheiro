@@ -1,4 +1,4 @@
-# Nunes & Pinheiro Advogados — site institucional responsivo
+# Nunes & Pinheiro Advogados - site institucional responsivo
 
 Site de página única do escritório Nunes & Pinheiro Advogados, de Porto Velho/RO, construído para funcionar bem em qualquer tamanho de tela, do celular dobrável ao monitor 2K.
 
